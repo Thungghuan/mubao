@@ -11,6 +11,7 @@ import {
 } from './controller'
 import config from './bot.config'
 import { parseBirthdayData } from './utils'
+import { alert } from './controller/alert'
 
 const client = new PrismaClient()
 
@@ -103,6 +104,20 @@ bot.command('add_birthday', async (ctx) => {
     }
   } else {
     await ctx.reply('请将生日的信息作为引用消息发给我哦～')
+  }
+})
+
+bot.command('alert', async (ctx) => {
+  const chatroom = await findChatroom(client, '' + ctx.chatroom)
+
+  if (chatroom) {
+    if (chatroom.isEnabled) {
+      await ctx.reply(await alert(client, '' + ctx.chatroom))
+    } else {
+      await ctx.reply('请先激活本群的提醒订阅哦！')
+    }
+  } else {
+    await ctx.reply('本群还没有订阅提醒呀～')
   }
 })
 
