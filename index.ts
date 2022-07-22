@@ -1,5 +1,5 @@
 import config from './bot.config'
-import { Bot, defineConfig } from 'mumu-bot'
+import { Bot } from 'mumu-bot'
 
 const bot = new Bot(config)
 

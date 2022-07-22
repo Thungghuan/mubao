@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Birthday {
+  id         Int      @id @default(autoincrement())
+  nmae       String
+  month      String
+  date       String
+  chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
+  chatroomId Int
+}
+
+model Chatroom {
+  id         Int        @id @default(autoincrement())
+  chatroomId String
+  birthdays  Birthday[]
+  isEnabled  Boolean
+}
