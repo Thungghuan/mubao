@@ -21,6 +21,7 @@ model Birthday {
 
 model Chatroom {
   id         Int        @id @default(autoincrement())
+  name       String
   chatroomId String
   birthdays  Birthday[]
   isEnabled  Boolean
