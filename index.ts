@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import {
   addBirthday,
   addChatroom,
+  alert,
   findChatroom,
   showAllBirthday,
   showAllChatroom,
@@ -11,7 +12,6 @@ import {
 } from './controller'
 import config from './bot.config'
 import { parseBirthdayData } from './utils'
-import { alert } from './controller/alert'
 
 const client = new PrismaClient()
 
