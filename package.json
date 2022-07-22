@@ -4,15 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx index.ts"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "mumu-bot": "1.0.1-beta.1"
-  },
   "devDependencies": {
     "@prisma/client": "^4.1.0",
-    "prisma": "^4.1.0"
+    "prisma": "^4.1.0",
+    "tsx": "^3.8.0"
+  },
+  "dependencies": {
+    "mumu-bot": "1.0.1-beta.2"
   }
 }
