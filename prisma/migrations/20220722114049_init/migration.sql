@@ -1,19 +1,20 @@
 -- CreateTable
 CREATE TABLE `Birthday` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nmae` VARCHAR(191) NOT NULL,
-    `month` VARCHAR(191) NOT NULL,
-    `date` VARCHAR(191) NOT NULL,
-    `chatroomId` INTEGER NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `month` INTEGER NOT NULL,
+    `date` INTEGER NOT NULL,
+    `chatroomId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Birthday_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Chatroom` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `chatroomId` VARCHAR(191) NOT NULL,
-    `isEnabled` BOOLEAN NOT NULL,
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `isEnabled` BOOLEAN NOT NULL DEFAULT true,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
