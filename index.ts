@@ -1,10 +1,13 @@
 import { Bot } from 'mumu-bot'
-import { Birthday, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import {
   addBirthday,
   addChatroom,
   findChatroom,
-  showAllChatroom
+  showAllBirthday,
+  showAllChatroom,
+  toggleChatroomEnbale,
+  updateChatroomName
 } from './controller'
 import config from './bot.config'
 
@@ -12,8 +15,51 @@ const client = new PrismaClient()
 
 const bot = new Bot(config)
 
-bot.command('show_birthday', (ctx) => {
-  ctx.reply('这个群记录的生日信息:')
+bot.command('show_chatroom', async (ctx) => {
+  if (ctx.sender === config.masterQQ) {
+    const chatrooms = await showAllChatroom(client)
+    let replyMsg = '订阅的生日提醒的聊天有：\nID\tName\tStatus\n'
+
+    chatrooms.forEach((chatroom) => {
+      replyMsg += `${chatroom.id} ${chatroom.name} ${
+        chatroom.isEnabled ? 'enabled' : 'disabled'
+      }`
+    })
+
+    ctx.reply(replyMsg)
+  }
+})
+
+bot.command('toggle_chatroom', async (ctx) => {
+  const result = await toggleChatroomEnbale(client, '' + ctx.chatroom)
+
+  ctx.reply(
+    `本聊天室生日提醒订阅状态：${result.isEnabled ? '已激活' : '未激活'}`
+  )
+})
+
+bot.command('update_title', async (ctx) => {
+  const name = ctx.command.attrs[0] || ''
+
+  if (!name) {
+    await ctx.reply('请告诉我一个提醒的标题哦')
+  } else {
+    await updateChatroomName(client, '' + ctx.chatroom, name)
+
+    await ctx.reply(`本群提醒标题已经更新为：${name}`)
+  }
+})
+
+bot.command('show_birthday', async (ctx) => {
+  const birthdayData = await showAllBirthday(client)
+
+  let replyMsg = '本群订阅的生日信息有：\nID Name Date\n'
+
+  birthdayData.forEach((birthday) => {
+    replyMsg += `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}\n`
+  })
+
+  await ctx.reply(replyMsg)
 })
 
 bot.command('add_birthday', async (ctx) => {

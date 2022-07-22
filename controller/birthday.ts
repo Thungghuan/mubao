@@ -1,16 +1,8 @@
 import { PrismaClient } from '@prisma/client'
-
-interface BirthdayCreateInput {
-  name: string
-  month: number
-  date: number
-  chatroomId: string
-}
+import { BirthdayCreateInput } from '../types'
 
 export async function showAllBirthday(client: PrismaClient) {
-  const result = await client.birthday.findMany()
-
-  console.log(result)
+  return await client.birthday.findMany()
 }
 
 export async function addBirthday(

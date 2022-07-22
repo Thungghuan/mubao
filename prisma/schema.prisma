@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Birthday {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique
-  month      Int
-  date       Int
-  chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
-  chatroomId String
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  month        Int
+  date         Int
+  chatroom     Chatroom @relation(fields: [chatroomId, chatroomName], references: [id, name])
+  chatroomId   String
+  chatroomName String
 }
 
 model Chatroom {
@@ -24,4 +25,6 @@ model Chatroom {
   name      String
   birthdays Birthday[]
   isEnabled Boolean    @default(true)
+
+  @@unique([id, name])
 }

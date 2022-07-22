@@ -45,3 +45,18 @@ export async function toggleChatroomEnbale(client: PrismaClient, id: string) {
     }
   })
 }
+
+export async function updateChatroomName(
+  client: PrismaClient,
+  id: string,
+  name: string
+) {
+  return await client.chatroom.update({
+    where: {
+      id
+    },
+    data: {
+      name
+    }
+  })
+}
