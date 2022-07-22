@@ -115,11 +115,7 @@ bot.command('alert', async (ctx) => {
   const chatroom = await findChatroom(client, '' + ctx.chatroom)
 
   if (chatroom) {
-    if (chatroom.isEnabled) {
-      await ctx.reply(await alert(client, '' + ctx.chatroom))
-    } else {
-      await ctx.reply('请先激活本群的提醒订阅哦！')
-    }
+    await ctx.reply(await alert(client, '' + ctx.chatroom))
   } else {
     await ctx.reply('本群还没有订阅提醒呀～')
   }
