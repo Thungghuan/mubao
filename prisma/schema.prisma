@@ -11,12 +11,12 @@ datasource db {
 }
 
 model Birthday {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique
-  month        String
-  date         String
-  chatroom     Chatroom @relation(fields: [chatroomId], references: [id])
-  chatroomId   String
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  month      Int
+  date       Int
+  chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
+  chatroomId String
 }
 
 model Chatroom {

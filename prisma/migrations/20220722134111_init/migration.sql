@@ -2,8 +2,8 @@
 CREATE TABLE `Birthday` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `month` VARCHAR(191) NOT NULL,
-    `date` VARCHAR(191) NOT NULL,
+    `month` INTEGER NOT NULL,
+    `date` INTEGER NOT NULL,
     `chatroomId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Birthday_name_key`(`name`),

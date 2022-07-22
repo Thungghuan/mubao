@@ -1,6 +1,6 @@
 export interface BirthdayCreateInput {
   name: string
-  month: string
-  date: string
+  month: number
+  date: number
   chatroomId: string
 }

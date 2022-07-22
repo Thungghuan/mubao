@@ -62,10 +62,14 @@ bot.command('show_birthday', async (ctx) => {
     let replyMsg = '本群订阅的生日信息有：\nID Name Date\n'
 
     replyMsg += birthdayData
-      .map(
-        (birthday) =>
-          `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}`
-      )
+      .map((birthday) => {
+        const month =
+          birthday.month < 10 ? `0${birthday.month}` : `${birthday.month}`
+        const date =
+          birthday.date < 10 ? `0${birthday.date}` : `${birthday.date}`
+
+        return `${birthday.id} ${birthday.name} ${month}.${date}`
+      })
       .join('\n')
 
     await ctx.reply(replyMsg)
