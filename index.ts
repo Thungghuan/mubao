@@ -21,11 +21,14 @@ bot.command('show_chatroom', async (ctx) => {
     const chatrooms = await showAllChatroom(client)
     let replyMsg = '订阅的生日提醒的聊天有：\nID\tName\tStatus\n'
 
-    chatrooms.forEach((chatroom) => {
-      replyMsg += `${chatroom.id} ${chatroom.name} ${
-        chatroom.isEnabled ? 'enabled' : 'disabled'
-      }`
-    })
+    replyMsg += chatrooms
+      .map(
+        (chatroom) =>
+          `${chatroom.id} ${chatroom.name} ${
+            chatroom.isEnabled ? 'enabled' : 'disabled'
+          }`
+      )
+      .join('\n')
 
     ctx.reply(replyMsg)
   }
@@ -57,9 +60,12 @@ bot.command('show_birthday', async (ctx) => {
   if (birthdayData && birthdayData.length > 0) {
     let replyMsg = '本群订阅的生日信息有：\nID Name Date\n'
 
-    birthdayData.forEach((birthday) => {
-      replyMsg += `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}\n`
-    })
+    replyMsg += birthdayData
+      .map(
+        (birthday) =>
+          `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}`
+      )
+      .join('\n')
 
     await ctx.reply(replyMsg)
   } else {
