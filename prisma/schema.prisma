@@ -13,11 +13,10 @@ datasource db {
 model Birthday {
   id           Int      @id @default(autoincrement())
   name         String   @unique
-  month        Int
-  date         Int
-  chatroom     Chatroom @relation(fields: [chatroomId, chatroomName], references: [id, name])
+  month        String
+  date         String
+  chatroom     Chatroom @relation(fields: [chatroomId], references: [id])
   chatroomId   String
-  chatroomName String
 }
 
 model Chatroom {

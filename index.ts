@@ -10,6 +10,7 @@ import {
   updateChatroomName
 } from './controller'
 import config from './bot.config'
+import { parseBirthdayData } from './utils'
 
 const client = new PrismaClient()
 
@@ -53,13 +54,17 @@ bot.command('update_title', async (ctx) => {
 bot.command('show_birthday', async (ctx) => {
   const birthdayData = await showAllBirthday(client)
 
-  let replyMsg = '本群订阅的生日信息有：\nID Name Date\n'
+  if (birthdayData && birthdayData.length > 0) {
+    let replyMsg = '本群订阅的生日信息有：\nID Name Date\n'
 
-  birthdayData.forEach((birthday) => {
-    replyMsg += `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}\n`
-  })
+    birthdayData.forEach((birthday) => {
+      replyMsg += `${birthday.id} ${birthday.name} ${birthday.month}.${birthday.date}\n`
+    })
 
-  await ctx.reply(replyMsg)
+    await ctx.reply(replyMsg)
+  } else {
+    await ctx.reply('本群还没有订阅生日信息哦')
+  }
 })
 
 bot.command('add_birthday', async (ctx) => {
@@ -70,8 +75,7 @@ bot.command('add_birthday', async (ctx) => {
     await addChatroom(client, chatroomName, chatroomId)
     const replyMsg = `成功记录当前群聊
 提醒标题：${chatroomName}
-订阅状态：已激活
-`
+订阅状态：已激活`
     await ctx.reply(replyMsg)
   }
 
@@ -81,14 +85,13 @@ bot.command('add_birthday', async (ctx) => {
     if (quoteMessage.origin[0].type === 'Plain') {
       const birthdayData = quoteMessage.origin[0].text
 
-      await addBirthday(client, {
-        chatroomId: chatroomId,
-        name: 'hi',
-        month: 1,
-        date: 1
+      const allData = parseBirthdayData(birthdayData, chatroomId)
+
+      allData.forEach(async (data) => {
+        await addBirthday(client, data)
       })
 
-      await ctx.reply('添加数据成功')
+      await ctx.reply(`添加数据成功，共有${allData.length}条数据`)
     } else {
       await ctx.reply('看不懂你引用的消息捏～按格式发给我哦')
     }
