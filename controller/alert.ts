@@ -21,6 +21,7 @@ export async function alert(client: PrismaClient, chatroomId: string) {
   const birthdayToday = allBirthdayData.filter(birthdayFilter())
   const birthdayIn3days = allBirthdayData.filter(birthdayFilter(3))
   const birthdayIn7days = allBirthdayData.filter(birthdayFilter(7, 3))
+  // console.log(birthdayToday, birthdayIn3days, birthdayIn7days)
 
   let todayMsg = ''
   let threeDayMsg = ''

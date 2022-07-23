@@ -12,11 +12,13 @@ datasource db {
 
 model Birthday {
   id         Int      @id @default(autoincrement())
-  name       String   @unique
+  name       String
   month      Int
   date       Int
   chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
   chatroomId String
+
+  @@unique([chatroomId, name])
 }
 
 model Chatroom {
@@ -25,6 +27,4 @@ model Chatroom {
   birthdays Birthday[]
   isEnabled Boolean    @default(true)
   isGroup   Boolean
-
-  @@unique([id, name])
 }

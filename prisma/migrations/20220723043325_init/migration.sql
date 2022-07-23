@@ -6,7 +6,7 @@ CREATE TABLE `Birthday` (
     `date` INTEGER NOT NULL,
     `chatroomId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Birthday_name_key`(`name`),
+    UNIQUE INDEX `Birthday_chatroomId_name_key`(`chatroomId`, `name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -17,7 +17,6 @@ CREATE TABLE `Chatroom` (
     `isEnabled` BOOLEAN NOT NULL DEFAULT true,
     `isGroup` BOOLEAN NOT NULL,
 
-    UNIQUE INDEX `Chatroom_id_name_key`(`id`, `name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

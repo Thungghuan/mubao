@@ -13,7 +13,10 @@ export async function addBirthday(
 
   return await client.birthday.upsert({
     where: {
-      name
+      chatroomId_name: {
+        chatroomId,
+        name
+      }
     },
     create: {
       name,
