@@ -21,7 +21,6 @@ export async function alert(client: PrismaClient, chatroomId: string) {
   const birthdayToday = allBirthdayData.filter(birthdayFilter())
   const birthdayIn3days = allBirthdayData.filter(birthdayFilter(3))
   const birthdayIn7days = allBirthdayData.filter(birthdayFilter(7, 3))
-  // console.log(birthdayToday, birthdayIn3days, birthdayIn7days)
 
   let todayMsg = ''
   let threeDayMsg = ''
@@ -141,8 +140,8 @@ export function birthdayFilter(
         .month(el.month - 1)
         .date(el.date)
         .isBetween(
-          moment(today).add(start, 'd'),
-          moment(today).add(end, 'd'),
+          moment(today).hour(0).minute(0).second(0).add(start, 'd'),
+          moment(today).hour(0).minute(0).second(0).add(end, 'd'),
           null,
           '[]'
         )
