@@ -24,6 +24,7 @@ model Chatroom {
   name      String
   birthdays Birthday[]
   isEnabled Boolean    @default(true)
+  isGroup   Boolean
 
   @@unique([id, name])
 }

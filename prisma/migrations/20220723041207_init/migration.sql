@@ -15,6 +15,7 @@ CREATE TABLE `Chatroom` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `isEnabled` BOOLEAN NOT NULL DEFAULT true,
+    `isGroup` BOOLEAN NOT NULL,
 
     UNIQUE INDEX `Chatroom_id_name_key`(`id`, `name`),
     PRIMARY KEY (`id`)

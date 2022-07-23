@@ -69,7 +69,26 @@ export async function alert(client: PrismaClient, chatroomId: string) {
     return '最近没有生日的人:)'
   }
 
-  return `${title}生日提醒：${todayMsg}${threeDayMsg}${sevenDayMsg}`
+  return `${title}：${todayMsg}${threeDayMsg}${sevenDayMsg}`
+}
+
+export async function alertAllChatroom(client: PrismaClient) {
+  const allEnabledChatroom = await client.chatroom.findMany({
+    where: {
+      isEnabled: true
+    }
+  })
+
+  const result: [string, boolean, string][] = []
+  for await (const chatroom of allEnabledChatroom) {
+    result.push([
+      chatroom.id,
+      chatroom.isGroup,
+      await alert(client, chatroom.id)
+    ])
+  }
+
+  return result
 }
 
 function formatTime(month: number, date: number) {

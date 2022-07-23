@@ -4,6 +4,7 @@ import {
   addBirthday,
   addChatroom,
   alert,
+  alertAllChatroom,
   findChatroom,
   showAllBirthday,
   showAllChatroom,
@@ -12,6 +13,7 @@ import {
 } from './controller'
 import config from './bot.config'
 import { parseBirthdayData } from './utils'
+import schedule from 'node-schedule'
 
 const client = new PrismaClient()
 
@@ -81,9 +83,10 @@ bot.command('show_birthday', async (ctx) => {
 bot.command('add_birthday', async (ctx) => {
   const chatroomName = ctx.chatroomName
   const chatroomId = '' + ctx.chatroom
+  const isGroup = ctx.chatroomType === 'Group'
 
   if ((await findChatroom(client, chatroomId)) === null) {
-    await addChatroom(client, chatroomName, chatroomId)
+    await addChatroom(client, chatroomName, isGroup, chatroomId)
     const replyMsg = `成功记录当前群聊
 提醒标题：${chatroomName}
 订阅状态：已激活`
@@ -122,3 +125,18 @@ bot.command('alert', async (ctx) => {
 })
 
 bot.start()
+
+schedule.scheduleJob('* * * * *', async () => {
+  const allChatroomMessage = await alertAllChatroom(client)
+  allChatroomMessage.forEach(async ([chatroomId, isGroup, replyMessage]) => {
+    await bot.sendMessage(
+      +chatroomId,
+      isGroup ? 'Group' : 'Friend',
+      replyMessage
+    )
+  })
+})
+
+process.on('SIGINT', function () {
+  schedule.gracefulShutdown().then(() => process.exit(0))
+})
