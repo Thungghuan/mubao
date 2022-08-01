@@ -126,7 +126,7 @@ bot.command('alert', async (ctx) => {
 
 bot.start()
 
-schedule.scheduleJob('10/30/50 * * * * *', async () => {
+schedule.scheduleJob('0 0 * * *', async () => {
   const allChatroomMessage = await alertAllChatroom(client)
   allChatroomMessage.forEach(async ([chatroomId, isGroup, replyMessage]) => {
     await bot.sendMessage(
